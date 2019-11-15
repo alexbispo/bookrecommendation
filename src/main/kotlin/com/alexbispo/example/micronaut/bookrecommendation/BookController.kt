@@ -19,11 +19,11 @@ class BookController {
     fun index(): Flowable<BookRecommendation> {
         return catalogueClient.findAll(null)
                 .flatMap{ Flowable.fromIterable(it) }
-                .flatMapMaybe { book ->
-                    inventoryClient.stock(book.isbn)
-                            .filter{ it }
-                            .map { book }
-                }
-                .map { (_, name) -> BookRecommendation(name) }
+//                .flatMapMaybe { book ->
+//                    inventoryClient.stock(book.isbn)
+//                            .filter{ it is Boolean }
+//                            .map { book }
+//                }
+                .map { BookRecommendation(it.name) }
     }
 }
